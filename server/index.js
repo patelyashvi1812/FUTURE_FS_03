@@ -36,10 +36,38 @@ io.on('connection', (socket) => {
     });
 });
 
-// Database Connection
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/perfume-store')
-    .then(() => console.log('MongoDB Connected'))
-    .catch(err => console.error('MongoDB Connection Error:', err));
+// Database Connection Middleware
+const connectDB = async (req, res, next) => {
+    if (mongoose.connection.readyState === 1) {
+        return next();
+    }
+    
+    try {
+        if (mongoose.connection.readyState === 2) {
+            // Already connecting, wait for it to complete
+            await new Promise((resolve) => {
+                const check = setInterval(() => {
+                    if (mongoose.connection.readyState === 1) {
+                        clearInterval(check);
+                        resolve();
+                    }
+                }, 100);
+            });
+            return next();
+        }
+
+        console.log('Connecting to MongoDB...');
+        await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/perfume-store');
+        console.log('MongoDB Connected successfully');
+        next();
+    } catch (err) {
+        console.error('Database connection error in middleware:', err);
+        res.status(500).json({ error: 'Database connection failed' });
+    }
+};
+
+app.use(connectDB);
+
 
 
 app.get('/', (req, res) => {
