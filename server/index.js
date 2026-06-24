@@ -42,6 +42,10 @@ mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/perfume-sto
     .catch(err => console.error('MongoDB Connection Error:', err));
 
 
+app.get('/', (req, res) => {
+    res.json({ message: "Perfume Store API is running successfully." });
+});
+
 // ============ AUTH ROUTES ============
 
 // Register
