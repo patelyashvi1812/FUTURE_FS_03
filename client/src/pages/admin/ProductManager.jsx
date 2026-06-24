@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Plus, Edit2, Trash2, X, Archive, Tag, Package, Layers } from 'lucide-react';
+import { API_URL } from '../../config';
 
 const AdminProducts = () => {
     const [products, setProducts] = useState([]);
@@ -16,7 +17,7 @@ const AdminProducts = () => {
 
     const fetchProducts = async () => {
         try {
-            const res = await axios.get('http://localhost:5001/api/products');
+            const res = await axios.get(`${API_URL}/api/products`);
             const sortedProducts = res.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
             setProducts(sortedProducts);
         } catch (err) {
@@ -27,7 +28,7 @@ const AdminProducts = () => {
     const handleDelete = async (id) => {
         if (window.confirm('Permanent deletion of this fragment?')) {
             try {
-                await axios.delete(`http://localhost:5001/api/products/${id}`);
+                await axios.delete(`${API_URL}/api/products/${id}`);
                 fetchProducts();
             } catch (err) {
                 console.error("Error deleting product", err);
@@ -96,9 +97,9 @@ const AdminProducts = () => {
             };
 
             if (editingId) {
-                await axios.put(`http://localhost:5001/api/products/${editingId}`, productData);
+                await axios.put(`${API_URL}/api/products/${editingId}`, productData);
             } else {
-                await axios.post('http://localhost:5001/api/products', productData);
+                await axios.post(`${API_URL}/api/products`, productData);
             }
             setShowModal(false);
             setEditingId(null);

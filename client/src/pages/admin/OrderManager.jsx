@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Package, ChevronDown, Trash2, CheckCircle2, Clock, Truck, ShieldCheck } from 'lucide-react';
 import socket from '../../lib/socket';
+import { API_URL } from '../../config';
 
 const AdminOrders = () => {
     const [orders, setOrders] = useState([]);
@@ -22,7 +23,7 @@ const AdminOrders = () => {
 
     const fetchOrders = async () => {
         try {
-            const res = await axios.get('http://localhost:5001/api/admin/orders');
+            const res = await axios.get(`${API_URL}/api/admin/orders`);
             setOrders(res.data);
         } catch (err) {
             console.error('Failed to fetch orders:', err);
@@ -30,13 +31,13 @@ const AdminOrders = () => {
     };
 
     const handleStatusUpdate = async (id, newStatus) => {
-        await axios.put(`http://localhost:5001/api/orders/${id}`, { status: newStatus });
+        await axios.put(`${API_URL}/api/orders/${id}`, { status: newStatus });
     };
 
     const handleDeleteOrder = async (id) => {
         if (!window.confirm('Erase this transaction from history?')) return;
         try {
-            await axios.delete(`http://localhost:5001/api/orders/${id}`);
+            await axios.delete(`${API_URL}/api/orders/${id}`);
             setOrders(prev => prev.filter(order => order._id !== id));
         } catch (err) {
             console.error('Failed to delete order:', err);
@@ -60,7 +61,7 @@ const AdminOrders = () => {
     const handleBulkDelete = async () => {
         if (!window.confirm(`Erase ${selectedOrders.length} records from archive?`)) return;
         try {
-            await axios.post('http://localhost:5001/api/admin/orders/bulk-delete', { orderIds: selectedOrders });
+            await axios.post(`${API_URL}/api/admin/orders/bulk-delete`, { orderIds: selectedOrders });
             setOrders(prev => prev.filter(o => !selectedOrders.includes(o._id)));
             setSelectedOrders([]);
         } catch (err) {

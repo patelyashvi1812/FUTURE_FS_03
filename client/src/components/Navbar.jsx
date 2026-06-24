@@ -6,6 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import AuthModal from './AuthModal';
 import UserAvatar from './UserAvatar';
 import axios from 'axios';
+import { API_URL } from '../config';
 
 const Navbar = () => {
     const { cart } = useCart();
@@ -29,7 +30,7 @@ const Navbar = () => {
 
     const fetchProducts = async () => {
         try {
-            const res = await axios.get('http://localhost:5001/api/products');
+            const res = await axios.get(`${API_URL}/api/products`);
             if (Array.isArray(res.data)) {
                 setAllProducts(res.data);
             }

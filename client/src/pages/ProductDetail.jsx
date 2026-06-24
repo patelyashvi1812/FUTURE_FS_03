@@ -5,6 +5,7 @@ import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 import { Heart, ShoppingBag, Truck, Shield, ArrowLeft, Star, Share2 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { API_URL } from '../config';
 
 const ProductDetail = () => {
     const { id } = useParams();
@@ -20,7 +21,7 @@ const ProductDetail = () => {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const res = await axios.get(`http://localhost:5001/api/products/${id}`);
+                const res = await axios.get(`${API_URL}/api/products/${id}`);
                 setProduct(res.data);
                 if (res.data.images && res.data.images.length > 0) {
                     setSelectedImage(res.data.images[0]);

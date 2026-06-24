@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import socket from '../lib/socket';
 import ProductSkeleton from '../components/ProductSkeleton';
+import { API_URL } from '../config';
 
 const Home = () => {
     const [products, setProducts] = useState([]);
@@ -28,11 +29,11 @@ const Home = () => {
     const fetchProducts = async () => {
         try {
             setLoading(true);
-            const res = await axios.get('http://localhost:5001/api/products');
+            const res = await axios.get(`${API_URL}/api/products`);
             if (res.data && res.data.length === 0) {
                 // If no products, try to seed or handle empty state
-                await axios.get('http://localhost:5001/api/seed');
-                const retry = await axios.get('http://localhost:5001/api/products');
+                await axios.get(`${API_URL}/api/seed`);
+                const retry = await axios.get(`${API_URL}/api/products`);
                 setProducts(retry.data);
                 setFeaturedProducts(retry.data.length > 4 ? retry.data.slice(0, 4) : retry.data);
             } else {
