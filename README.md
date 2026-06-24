@@ -7,6 +7,11 @@
   </p>
 
   <p>
+    <a href="https://perfume-store-nine-phi.vercel.app/"><strong>⚡ Live Frontend Preview</strong></a> • 
+    <a href="https://perfume-store-server-sand.vercel.app/"><strong>⚙️ Live Backend API</strong></a>
+  </p>
+
+  <p>
     <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React" />
     <img src="https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js" />
     <img src="https://img.shields.io/badge/Express.js-404D59?style=for-the-badge" alt="Express.js" />
@@ -117,7 +122,7 @@ npm run dev
 ## 🔐 Admin Credentials
 
 Access the **Admin Terminal** using the following credentials:
-> **Email:** `admin@gmail.com`
+> **Email:** `admin@perfumestore.com`
 > **Password:** `admin123`
 
 ---
